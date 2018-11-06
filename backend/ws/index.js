@@ -1,4 +1,5 @@
 const { NAMESPACE } = require('./constants');
+const handler = require('./handler');
 
 module.exports = dependencies => {
   const logger = dependencies('logger');
@@ -17,10 +18,7 @@ module.exports = dependencies => {
       return;
     }
 
-    const callHandler = require('./handler')(dependencies);
-    const conferenceNamespace = io.of(NAMESPACE);
-
-    callHandler.init(conferenceNamespace);
+    handler(dependencies).init(io.of(NAMESPACE));
     initialized = true;
   }
 };

@@ -36,8 +36,10 @@ module.exports = dependencies => {
       logger.info(`New connection on videoconference by user ${userId}`);
 
       socket.on('message', message => {
+        message = message || {};
+        message.from = userId;
         // push the message in a message.type topic
-        message && message.type && pubsub.global.topic(message.type).publish(message);
+        message.type && pubsub.global.topic(message.type).publish(message);
       });
     });
   }
