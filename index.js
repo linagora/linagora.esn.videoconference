@@ -5,7 +5,9 @@ const Dependency = AwesomeModule.AwesomeModuleDependency;
 const path = require('path');
 const glob = require('glob-all');
 const FRONTEND_JS_PATH = __dirname + '/frontend/app/';
+const NAME = 'videoconference';
 const AWESOME_MODULE_NAME = 'linagora.esn.videoconference';
+const APP_ENTRY_POINT = path.join(FRONTEND_JS_PATH, NAME + '.module.js');
 
 const awesomeModule = new AwesomeModule(AWESOME_MODULE_NAME, {
   dependencies: [
@@ -42,20 +44,20 @@ const awesomeModule = new AwesomeModule(AWESOME_MODULE_NAME, {
 
       // Register every exposed frontend scripts
       const frontendJsFilesFullPath = glob.sync([
-        FRONTEND_JS_PATH + '**/*.module.js',
+        APP_ENTRY_POINT,
         FRONTEND_JS_PATH + '**/!(*spec).js'
       ]);
       const frontendJsFilesUri = frontendJsFilesFullPath.map(function(filepath) {
         return filepath.replace(FRONTEND_JS_PATH, '');
       });
-      const lessFile = path.join(FRONTEND_JS_PATH, 'app.less');
+      const lessFile = path.join(FRONTEND_JS_PATH, 'styles.less');
 
-      webserverWrapper.injectAngularAppModules(AWESOME_MODULE_NAME, frontendJsFilesUri, AWESOME_MODULE_NAME, ['esn'], {
+      webserverWrapper.injectAngularAppModules(NAME, frontendJsFilesUri, AWESOME_MODULE_NAME, ['esn'], {
         localJsFiles: frontendJsFilesFullPath
       });
-      webserverWrapper.injectLess(AWESOME_MODULE_NAME, [lessFile], 'esn');
+      webserverWrapper.injectLess(NAME, [lessFile], 'esn');
 
-      webserverWrapper.addApp(AWESOME_MODULE_NAME, app);
+      webserverWrapper.addApp(NAME, app);
 
       return callback();
     },
