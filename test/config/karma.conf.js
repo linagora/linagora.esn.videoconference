@@ -24,8 +24,8 @@ module.exports = function(config) {
       'frontend/app/**/*.pug'
     ],
     exclude: [
-      'frontend/app/app.router.js',
-      'frontend/app/app.run.js'
+      'frontend/app/*.router.js',
+      'frontend/app/**/*.run.js'
     ],
     frameworks: ['mocha'],
     colors: true,
