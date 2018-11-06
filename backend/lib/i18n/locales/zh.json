@@ -1,3 +1,5 @@
 {
-    "Call": "视频通话"
+  "Call": "视频通话",
+  "Conference application URL": "会议申请URL",
+  "Jitsi HTTP URL": "Jitsi HTTP URL"
 }

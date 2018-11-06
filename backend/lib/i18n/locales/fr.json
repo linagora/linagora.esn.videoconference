@@ -1,3 +1,5 @@
 {
-    "Call": "Appeler"
+  "Call": "Appeler",
+  "Conference application URL": "URL de l'application conférence",
+  "Jitsi HTTP URL": "Jitsi HTTP URL"
 }
