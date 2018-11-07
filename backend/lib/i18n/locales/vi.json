@@ -1,3 +1,5 @@
 {
-    "Call": "Gọi"
+  "Call": "Gọi",
+  "Conference application URL": "URL ứng dụng hội nghị",
+  "Jitsi HTTP URL": "HTTP URL của Jitsi"
 }
