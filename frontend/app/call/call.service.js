@@ -4,7 +4,7 @@
   angular.module('linagora.esn.videoconference')
     .factory('VideoConfCallService', VideoConfCallService);
 
-  function VideoConfCallService(session, VideoConfMessagingService, VIDEOCONFERENCE_EVENTS) {
+  function VideoConfCallService(session, VideoConfLaunchService, VideoConfMessagingService, VIDEOCONFERENCE_EVENTS) {
     return {
       call: call
     };
@@ -18,6 +18,8 @@
         type: VIDEOCONFERENCE_EVENTS.INCOMING_CALL,
         id: callId
       };
+
+      VideoConfLaunchService.openConference(message.id);
 
       return _sendMessage('message', message);
     }
