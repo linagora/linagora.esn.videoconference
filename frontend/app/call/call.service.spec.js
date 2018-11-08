@@ -14,7 +14,7 @@ describe('The VideoConfCallService factory', function() {
 
     session = {
       user: {
-        _id: 'userId'
+        _id: 'userId1'
       }
     };
 
@@ -32,13 +32,14 @@ describe('The VideoConfCallService factory', function() {
 
   describe('The call function', function() {
     it('should send a valid message', function() {
-      var to = 'send me a message';
+      var to = 'userId2';
 
       VideoConfCallService.call(to);
       $rootScope.$digest();
 
       expect(VideoConfMessagingService.sendMessage).to.have.been.calledWith('message', {
         from: session.user._id,
+        id: 'userId1userId2',
         to: to,
         type: VIDEOCONFERENCE_EVENTS.INCOMING_CALL
       });
