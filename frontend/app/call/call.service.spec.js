@@ -5,11 +5,15 @@
 var expect = chai.expect;
 
 describe('The VideoConfCallService factory', function() {
-  var VIDEOCONFERENCE_EVENTS, session, $rootScope, VideoConfMessagingService, VideoConfCallService;
+  var VIDEOCONFERENCE_EVENTS, session, $rootScope, VideoConfMessagingService, VideoConfCallService, VideoConfLaunchService;
 
   beforeEach(function() {
     VideoConfMessagingService = {
       sendMessage: sinon.spy()
+    };
+
+    VideoConfLaunchService = {
+      openConference: sinon.spy()
     };
 
     session = {
@@ -20,6 +24,7 @@ describe('The VideoConfCallService factory', function() {
 
     module('linagora.esn.videoconference', function($provide) {
       $provide.value('VideoConfMessagingService', VideoConfMessagingService);
+      $provide.value('VideoConfLaunchService', VideoConfLaunchService);
       $provide.value('session', session);
     });
   });
