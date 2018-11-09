@@ -12,7 +12,7 @@
     };
 
     function getConferenceUrl(id) {
-      return getConferenceAppUrl().then(function(url) {
+      return getJitsiAppUrl().then(function(url) {
         return url + '/' + id;
       });
     }
