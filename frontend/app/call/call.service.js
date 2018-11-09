@@ -4,24 +4,38 @@
   angular.module('linagora.esn.videoconference')
     .factory('VideoConfCallService', VideoConfCallService);
 
-  function VideoConfCallService(session, VideoConfLaunchService, VideoConfMessagingService, VIDEOCONFERENCE_EVENTS) {
+  function VideoConfCallService($log, session, VideoConfLaunchService, VideoConfMessagingService, VIDEOCONFERENCE_EVENTS) {
     return {
-      call: call
+      call: call,
+      accept: accept,
+      deny: deny
     };
 
     function call(to) {
       var from = session.user._id;
       var callId = _generateCallId(from, to);
-      var message = {
+      var call = {
         from: from,
         to: to,
         type: VIDEOCONFERENCE_EVENTS.INCOMING_CALL,
         id: callId
       };
 
-      VideoConfLaunchService.openConference(message.id);
+      VideoConfLaunchService.openConference(callId);
 
-      return _sendMessage('message', message);
+      return _sendMessage('message', call);
+    }
+
+    function accept(call) {
+      $log.debug('Accepting call', call);
+      call && call.id && VideoConfLaunchService.openConference(call.id);
+      // TODO: Send a message so that we close all others call notifications
+    }
+
+    function deny(call) {
+      $log.debug('Denying call', call);
+      // TODO: Send a message so that we close all others call notifications
+      // TODO: Alert remote user?
     }
 
     function _sendMessage(type, message) {

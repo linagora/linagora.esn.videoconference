@@ -1,0 +1,10 @@
+.video-conference-call-notification-content
+  .avatar
+    esn-avatar(user-id="ctrl.call.from")
+  .message
+    span {{ctrl.callerName}} is calling you
+  .call-actions
+    button.btn.accept(ng-click="ctrl.onAccept()")
+      i.mdi.mdi-phone
+    button.btn.deny(ng-click="ctrl.onDeny()")
+      i.mdi.mdi-close

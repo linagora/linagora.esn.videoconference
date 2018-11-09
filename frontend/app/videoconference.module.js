@@ -5,6 +5,7 @@
 
   angular.module(MODULE_NAME, [
     'esn.core',
+    'esn.user',
     'ui.router',
     'op.dynamicDirective',
     'restangular'

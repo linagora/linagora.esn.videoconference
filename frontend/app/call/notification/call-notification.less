@@ -1,0 +1,60 @@
+@videoConferenceCallButtonColor: green;
+@videoConferenceDenyButtonColor: red;
+@videoConferenceNotificationBackgroundColor: #333;
+@videoConferenceNotificationTextColor: #fff;
+
+.videoconference-notification-container.alert-minimalist {
+	background-color: @videoConferenceNotificationBackgroundColor;
+	border-radius: 3px;
+	color: @videoConferenceNotificationTextColor;
+	padding: 10px;
+}
+
+videoconference-notification {
+  width: 100%;
+}
+
+.videoconference-notification-container {
+  padding-right: 10px !important; // to override $notify padding
+}
+
+.video-conference-call-notification-content {
+  .flex;
+
+  .avatar {
+    margin-right: 8px;
+
+    img {
+      .esn-avatar-lg;
+    }
+  }
+
+  .message {
+    .flex-grow;
+
+    font-weight: 600;
+  }
+
+  .call-actions {
+    .flex;
+
+    .btn {
+      font-size: 2rem;
+    }
+
+    .accept {
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      background-color: @videoConferenceCallButtonColor;
+      margin-right: 5px;
+    }
+
+    .deny {
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      background-color: @videoConferenceDenyButtonColor;
+    }
+  }
+}

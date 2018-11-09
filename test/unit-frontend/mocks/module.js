@@ -3,6 +3,7 @@
 /* global _: false */
 
 angular.module('esn.form.helper', []);
+angular.module('esn.user', []);
 angular.module('esn.core', [])
 .constant('_', _);
 angular.module('pascalprecht.translate', [])
