@@ -7,25 +7,25 @@
 
     return {
       getConferenceUrl: getConferenceUrl,
-      getConferenceAppUrl: getConferenceAppUrl,
-      getJitsiAppUrl: getJitsiAppUrl
+      getOpenPaasVideoconferenceAppUrl: getOpenPaasVideoconferenceAppUrl,
+      getjitsiInstanceUrl: getjitsiInstanceUrl
     };
 
     function getConferenceUrl(id) {
-      return getConferenceAppUrl().then(function(url) {
+      return getOpenPaasVideoconferenceAppUrl().then(function(url) {
         return url + '/' + id;
       });
     }
 
-    function getConferenceAppUrl() {
-      return esnConfig('linagora.esn.videoconference.baseUrl').then(function(baseUrl) {
-        return baseUrl;
+    function getOpenPaasVideoconferenceAppUrl() {
+      return esnConfig('linagora.esn.videoconference.openPaasVideoconferenceAppUrl').then(function(openPaasVideoconferenceAppUrl) {
+        return openPaasVideoconferenceAppUrl;
       });
     }
 
-    function getJitsiAppUrl() {
-      return esnConfig('linagora.esn.videoconference.jitsiConfUrl').then(function(jitsiConfUrl) {
-        return jitsiConfUrl;
+    function getjitsiInstanceUrl() {
+      return esnConfig('linagora.esn.videoconference.jitsiInstanceUrl').then(function(jitsiInstanceUrl) {
+        return jitsiInstanceUrl;
       });
     }
   }

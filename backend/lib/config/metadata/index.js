@@ -5,7 +5,7 @@ module.exports = dependencies => ({
     user: 'r'
   },
   configurations: {
-    jitsiConfUrl: require('./jitsiConfUrl')(dependencies),
-    baseUrl: require('./baseUrl')(dependencies)
+    jitsiInstanceUrl: require('./jitsiInstanceUrl')(dependencies),
+    openPaasVideoconferenceAppUrl: require('./openPaasVideoconferenceAppUrl')(dependencies)
   }
 });

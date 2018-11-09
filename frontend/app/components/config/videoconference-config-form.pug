@@ -3,8 +3,8 @@ ng-form(name="conferenceConfigForm")
   .row.flex-vertical-centered
     .col-xs-6
       esn-form-group(label=__('Jitsi HTTP URL'), form="conferenceConfigForm")
-        input.form-control(type="url", ng-model="$ctrl.configurations.baseUrl.value", name="baseUrl", required)
+        input.form-control(type="url", ng-model="$ctrl.configurations.jitsiInstanceUrl.value", name="jitsiInstanceUrl", required)
     .col-xs-6
       esn-form-group(label=__('Conference application URL'), form="conferenceConfigForm")
-        input.form-control(type="url", ng-model="$ctrl.configurations.jitsiConfUrl.value", name="jitsiConfUrl", required)
+        input.form-control(type="url", ng-model="$ctrl.configurations.openPaasVideoconferenceAppUrl.value", name="openPaasVideoconferenceAppUrl", required)
         
