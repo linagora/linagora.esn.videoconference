@@ -3,7 +3,7 @@
 
   angular.module('linagora.esn.videoconference').factory('VideoConfCallListeners', VideoConfCallListeners);
 
-  function VideoConfCallListeners($log, VideoConfMessagingService, VIDEOCONFERENCE_EVENTS) {
+  function VideoConfCallListeners($log, VideoConfMessagingService, VideoConfIncomingCallHandler, VIDEOCONFERENCE_EVENTS) {
     return {
       init: init
     };
@@ -14,8 +14,7 @@
 
     function onIncomingCall(message) {
       $log.debug('Got an incoming call', message);
-      // TODO: Show the call widget
-      // TODO: Buffer calls from the same caller in a given timewindow, maybe a session id will be useful for this
+      VideoConfIncomingCallHandler.onCall(message);
     }
   }
 })(angular);
