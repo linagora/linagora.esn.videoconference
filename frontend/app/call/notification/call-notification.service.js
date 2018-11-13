@@ -19,12 +19,18 @@
       scope.call = call;
 
       var element = $compile(component)(scope);
-
-      notifications[call.id] = $window.$.notify({}, {
+      var notification = $window.$.notify({}, {
         type: 'minimalist',
         delay: VIDEOCONFERENCE_TIMEOUT,
         icon_type: 'image',
+        mouse_over: 'pause',
         template: template,
+        onClose: function() {
+          if (!notification.closedByUser) {
+            // TODO: If notification is closed by delay timeout, do something
+            $log.debug('Notification timeout, user missed the call');
+          }
+        },
         onShow: function() {
           scope.onAccept = function() {
             closeNotification(call);
@@ -39,6 +45,8 @@
           angular.element('.videoconference-notification-container').append(element);
         }
       });
+
+      notifications[call.id] = notification;
     }
 
     function dismissCallNotification(call) {
@@ -47,7 +55,14 @@
     }
 
     function closeNotification(call) {
-      call && call.id && notifications[call.id] && notifications[call.id].close();
+      var notification = call && call.id && notifications[call.id];
+
+      if (!notification) {
+        return;
+      }
+
+      notification.closedByUser = true;
+      notification.close();
     }
   }
 })(angular);
