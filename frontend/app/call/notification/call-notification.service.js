@@ -3,9 +3,12 @@
 
   angular.module('linagora.esn.videoconference').factory('VideoConfCallNotification', VideoConfCallNotification);
 
-  function VideoConfCallNotification($window, $compile, $rootScope) {
+  function VideoConfCallNotification($log, $window, $compile, $rootScope) {
+    var notifications = {};
+
     return {
-      displayCallNotification: displayCallNotification
+      displayCallNotification: displayCallNotification,
+      dismissCallNotification: dismissCallNotification
     };
 
     function displayCallNotification(call, onAccept, onDeny) {
@@ -16,25 +19,35 @@
       scope.call = call;
 
       var element = $compile(component)(scope);
-      var notification = $window.$.notify({}, {
+
+      notifications[call.id] = $window.$.notify({}, {
         type: 'minimalist',
         delay: 0,
         icon_type: 'image',
         template: template,
         onShow: function() {
           scope.onAccept = function() {
-            notification.close();
+            closeNotification(call);
             onAccept && onAccept(call);
           };
 
           scope.onDeny = function() {
-            notification.close();
+            closeNotification(call);
             onDeny && onDeny(call);
           };
 
           angular.element('.videoconference-notification-container').append(element);
         }
       });
+    }
+
+    function dismissCallNotification(call) {
+      $log.debug('Dismissing call notification');
+      closeNotification(call);
+    }
+
+    function closeNotification(call) {
+      call && call.id && notifications[call.id] && notifications[call.id].close();
     }
   }
 })(angular);

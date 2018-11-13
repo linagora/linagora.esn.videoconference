@@ -3,7 +3,8 @@
 
   angular.module('linagora.esn.videoconference')
     .constant('VIDEOCONFERENCE_EVENTS', {
-      INCOMING_CALL: 'call:incoming'
+      INCOMING_CALL: 'call:incoming',
+      ACCEPTED_CALL: 'call:accepted'
     })
     .constant('VIDEOCONFERENCE_WEBSOCKET', {
       NAMESPACE: '/videoconference'

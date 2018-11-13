@@ -27,9 +27,14 @@
     }
 
     function accept(call) {
+      var ack = {};
+
       $log.debug('Accepting call', call);
       call && call.id && VideoConfLaunchService.openConference(call.id);
-      // TODO: Send a message so that we close all others call notifications
+      angular.copy(call, ack);
+      ack.type = VIDEOCONFERENCE_EVENTS.ACCEPTED_CALL;
+
+      _sendMessage('message', ack);
     }
 
     function deny(call) {
