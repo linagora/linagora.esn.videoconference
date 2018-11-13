@@ -7,6 +7,7 @@
       ACCEPTED_CALL: 'call:accepted',
       DENIED_CALL: 'call:denied'
     })
+    .constant('VIDEOCONFERENCE_TIMEOUT', 10 * 60 * 1000)
     .constant('VIDEOCONFERENCE_WEBSOCKET', {
       NAMESPACE: '/videoconference'
     })
