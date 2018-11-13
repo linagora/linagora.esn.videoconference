@@ -38,9 +38,12 @@
     }
 
     function deny(call) {
+      var ack = {};
+
       $log.debug('Denying call', call);
-      // TODO: Send a message so that we close all others call notifications
-      // TODO: Alert remote user?
+      angular.copy(call, ack);
+      ack.type = VIDEOCONFERENCE_EVENTS.DENIED_CALL;
+      _sendMessage('message', ack);
     }
 
     function _sendMessage(type, message) {
