@@ -19,11 +19,20 @@ module.exports = dependencies => {
 
   function listenToIncomingCalls() {
     const incomingCallTopic = EVENTS.INCOMING_CALL;
+    const acceptedCallTopic = EVENTS.ACCEPTED_CALL;
 
     logger.debug(`Subscribing to ${incomingCallTopic} global topic for videoconference incoming calls`);
     pubsub.global.topic(incomingCallTopic).subscribe(message => {
       logger.debug(`Received a message on global topic ${incomingCallTopic}`, message);
       sendTo(message.to, incomingCallTopic, message);
+    });
+
+    logger.debug(`Subscribing to ${acceptedCallTopic} global topic for videoconference accepted calls`);
+    pubsub.global.topic(acceptedCallTopic).subscribe(message => {
+      logger.debug(`Received a message on global topic ${acceptedCallTopic}`, message);
+      // when a call is accepted, notify the callee so that we close all the notifications
+      // TODO: Notify the caller so that he knows that the user accepted in OP
+      sendTo(message.to, acceptedCallTopic, message);
     });
   }
 
