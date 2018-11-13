@@ -3,7 +3,7 @@
 
   angular.module('linagora.esn.videoconference').factory('VideoConfCallNotification', VideoConfCallNotification);
 
-  function VideoConfCallNotification($log, $window, $compile, $rootScope) {
+  function VideoConfCallNotification($log, $window, $compile, $rootScope, VIDEOCONFERENCE_TIMEOUT) {
     var notifications = {};
 
     return {
@@ -22,7 +22,7 @@
 
       notifications[call.id] = $window.$.notify({}, {
         type: 'minimalist',
-        delay: 0,
+        delay: VIDEOCONFERENCE_TIMEOUT,
         icon_type: 'image',
         template: template,
         onShow: function() {
