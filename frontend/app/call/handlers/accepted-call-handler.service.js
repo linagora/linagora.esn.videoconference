@@ -3,7 +3,7 @@
 
   angular.module('linagora.esn.videoconference').factory('VideoConfAcceptedCallHandler', VideoConfAcceptedCallHandler);
 
-  function VideoConfAcceptedCallHandler(session, VideoConfCallNotification, VideoConfCallService) {
+  function VideoConfAcceptedCallHandler(session, VideoConfCallNotification) {
     return {
       onMessage: onMessage
     };
