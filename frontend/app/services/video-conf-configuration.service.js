@@ -13,6 +13,9 @@
 
     function getConferenceUrl(id) {
       return getOpenPaasVideoconferenceAppUrl().then(function(url) {
+        // remove trailing '/'
+        url = url.replace(/\/+$/i, '');
+
         return url + '/' + id;
       });
     }
