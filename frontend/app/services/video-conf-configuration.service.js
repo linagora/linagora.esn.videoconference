@@ -28,7 +28,7 @@
 
     function getjitsiInstanceUrl() {
       return esnConfig('linagora.esn.videoconference.jitsiInstanceUrl').then(function(jitsiInstanceUrl) {
-        return jitsiInstanceUrl;
+        return jitsiInstanceUrl.endsWith('/') ? jitsiInstanceUrl : jitsiInstanceUrl + '/';
       });
     }
   }
