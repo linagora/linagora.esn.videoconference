@@ -1,5 +1,7 @@
 {
   "Call": "Call",
   "Conference application URL": "Conference application URL",
-  "Jitsi HTTP URL": "Jitsi HTTP URL"
+  "Jitsi HTTP URL": "Jitsi HTTP URL",
+  "Video conference": "Video conference",
+  "Join the meeting video conference": "Join the meeting video conference"
 }

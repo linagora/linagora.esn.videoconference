@@ -1,8 +1,11 @@
-.row.videoconference(ng-if="$ctrl.isVideoConfBaseUrlValid()")
-  .col-xs-12
+.row.videoconference(ng-if="$ctrl.isVideoConfHostnameValid()")
+  // Case user can edit the event
+  .col-xs-12(ng-if="$ctrl.canModifyEvent")
     .form-group
       .input-group
         span.input-group-addon
+          md-tooltip(md-direction="bottom" md-z-index="10000")
+            span #{__('Video conference')}
           i.mdi.mdi-video
         .fg-line.select
           select.form-control(
@@ -13,8 +16,20 @@
     .form-group.event-subelement-flex-container
       .input-group
         span.input-group-addon
-      .fg-line.video-conf-url(
+      div(
         ng-show="$ctrl.videoconference() === $ctrl.videoconferenceOptions.OPENPAAS_VIDEOCONFERENCE"
       )
-        label.col-form-label(for="room-name") {{ $ctrl.videoConfBaseUrl }}
-        input#room-name.form-control(type='text' ng-model="$ctrl.roomName" ng-model-options="{getterSetter: true}")
+        .fg-line.video-conf-url
+          label.col-form-label(for="room-name") {{ $ctrl.videoConfHostname }}
+          input#room-name.form-control(type='text' ng-model="$ctrl.roomName" ng-model-options="{getterSetter: true}")
+        .input-group
+          a(ng-href="{{ $ctrl.event.xOpenpaasVideoconference }}") #{__('Join the meeting video conference')}
+
+  // Case user cannot modify the event
+  .col-xs-12.cal-event-form-organizer(ng-if="!$ctrl.canModifyEvent")
+    span.icon
+      md-tooltip(md-direction="bottom" md-z-index="10000")
+        span #{__('Video conference')}
+      i.mdi.mdi-video
+    .meta
+      a(ng-href="{{ $ctrl.event.xOpenpaasVideoconference }}") {{ $ctrl.event.xOpenpaasVideoconference }}

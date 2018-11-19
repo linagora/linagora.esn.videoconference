@@ -6,7 +6,8 @@
       templateUrl: '/videoconference/app/components/calendar-videoconference-form/calendar-videoconference.html',
       controller: 'calendarVideoconferenceFormController',
       bindings: {
-        event: '='
+        event: '=',
+        canModifyEvent: '='
       }
     });
 
