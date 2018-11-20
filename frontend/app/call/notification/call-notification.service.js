@@ -42,6 +42,7 @@
             onDeny && onDeny(call);
           };
 
+          notifications[call.id] && closeNotification(call);
           angular.element('.videoconference-notification-container.call-' + call.id).append(element);
         }
       });
