@@ -12,7 +12,7 @@
     };
 
     function displayCallNotification(call, onAccept, onDeny) {
-      var template = '<div data-notify="container" class="videoconference-notification-container alert alert-{0}" role="alert"></div>';
+      var template = '<div data-notify="container" class="videoconference-notification-container call-' + call.id + ' alert alert-{0}" role="alert"></div>';
       var component = '<videoconference-notification call="call" on-accept="onAccept()" on-deny="onDeny()"/>';
       var scope = $rootScope.$new();
 
@@ -42,7 +42,7 @@
             onDeny && onDeny(call);
           };
 
-          angular.element('.videoconference-notification-container').append(element);
+          angular.element('.videoconference-notification-container.call-' + call.id).append(element);
         }
       });
 
