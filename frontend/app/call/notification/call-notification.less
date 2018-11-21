@@ -18,8 +18,22 @@ videoconference-notification {
   padding-right: 10px !important; // to override $notify padding
 }
 
+@media(max-width: @screen-sm) {
+  .videoconference-notification-container {
+    top: 55px !important; // to override  $notify absolute position
+    right: 0px !important; // to override  $notify absolute position
+    min-width: 100vw;
+
+    &.alert-minimalist {
+      border-radius: 0px;
+    }
+  }
+}
+
 .video-conference-call-notification-content {
   .flex;
+
+  white-space: nowrap;
 
   .avatar {
     margin-right: 8px;
@@ -33,6 +47,7 @@ videoconference-notification {
     .flex-grow;
 
     font-weight: 600;
+    overflow: hidden;
   }
 
   .call-actions {
