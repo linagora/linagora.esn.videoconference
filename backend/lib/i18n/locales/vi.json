@@ -1,5 +1,7 @@
 {
   "Call": "Gọi",
   "Conference application URL": "URL ứng dụng hội nghị",
-  "Jitsi HTTP URL": "HTTP URL của Jitsi"
+  "Jitsi HTTP URL": "HTTP URL của Jitsi",
+  "Video conference": "Video conference",
+  "Join the meeting video conference": "Tham gia cuộc họp trực tuyên"
 }

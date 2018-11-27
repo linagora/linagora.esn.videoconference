@@ -1,4 +1,4 @@
-image: linagora/node-test-base:8
+image: node:8
 
 stages:
   - test
@@ -8,16 +8,19 @@ test:
   stage: test
   tags:
     - docker
-  image: docker-registry.linagora.com:5000/public-releases/openpaas-esn-test-helper:1.0.0
+  image: docker-registry.linagora.com:5000/public-snapshots/openpaas-esn-test-helper:latest
+  variables:
+    NODE_ENV: test
   services:
     - mongo:3.4
     - elasticsearch:2.4
     - redis:3
     - rabbitmq:3.6
-  script:
+  before_script:
     - npm i
     - npm update
     - bower i --allow-root
+  script:
     - grunt
 
 deploy_dev:

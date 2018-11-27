@@ -31,7 +31,13 @@ module.exports = function(config) {
     colors: true,
     singleRun: true,
     autoWatch: true,
-    browsers: ['PhantomJS', 'Chrome', 'Firefox'],
+    // Disable ChromeHeadless causing problems for now
+    // https://github.com/GoogleChrome/puppeteer/issues/1925
+    browsers: ['FirefoxHeadless'/*,'ChromeHeadless'*/],
+    customLaunchers: {
+      FirefoxHeadless: {base: 'Firefox', flags: ['--headless']},
+      ChromeHeadless: {base: 'Chrome', flags: ['--headless', '--disable-gpu']}
+    },
     reporters: ['coverage', 'spec'],
     preprocessors: {
       'frontend/app/**/*.js': ['coverage'],
@@ -39,7 +45,6 @@ module.exports = function(config) {
     },
 
     plugins: [
-      'karma-phantomjs-launcher',
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-mocha',
