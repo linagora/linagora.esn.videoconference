@@ -11,7 +11,7 @@
     self.videoconference = videoconference;
 
     function $onInit() {
-      return VideoConfConfigurationService.getJitsiInstanceUrl().then(function(jitsiInstanceUrl) {
+      return VideoConfConfigurationService.getOpenPaasVideoconferenceAppUrl().then(function(jitsiInstanceUrl) {
         self.videoConfHostname = jitsiInstanceUrl;
       });
     }

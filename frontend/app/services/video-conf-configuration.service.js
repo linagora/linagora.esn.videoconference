@@ -21,9 +21,12 @@
     }
 
     function getOpenPaasVideoconferenceAppUrl() {
-      return esnConfig('linagora.esn.videoconference.openPaasVideoconferenceAppUrl').then(function(openPaasVideoconferenceAppUrl) {
-        return openPaasVideoconferenceAppUrl;
-      });
+      return esnConfig('linagora.esn.videoconference.openPaasVideoconferenceAppUrl')
+        .then(function(openPaasVideoconferenceAppUrl) {
+          return openPaasVideoconferenceAppUrl.endsWith('/') ?
+                 openPaasVideoconferenceAppUrl :
+                 openPaasVideoconferenceAppUrl + '/';
+        });
     }
 
     function getJitsiInstanceUrl() {

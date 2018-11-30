@@ -18,16 +18,17 @@
     self.videoconference = videoconference;
 
     function $onInit() {
-      return VideoConfConfigurationService.getJitsiInstanceUrl().then(function(jitsiInstanceUrl) {
-        self.videoConfHostname = jitsiInstanceUrl;
+      return VideoConfConfigurationService.getOpenPaasVideoconferenceAppUrl()
+        .then(function(openPaasVideoconferenceAppUrl) {
+          self.videoConfHostname = openPaasVideoconferenceAppUrl;
 
-        if (self.event.xOpenpaasVideoconference && self.event.xOpenpaasVideoconference.trim().length > 0) {
-          self._videoconference = EVENT_VIDEOCONFERENCE_OPTIONS.OPENPAAS_VIDEOCONFERENCE;
-          self.roomName(new URL(self.event.xOpenpaasVideoconference).pathname.slice(1));
-        } else {
-          self.roomName(uuid4.generate());
-        }
-      });
+          if (self.event.xOpenpaasVideoconference && self.event.xOpenpaasVideoconference.trim().length > 0) {
+            self._videoconference = EVENT_VIDEOCONFERENCE_OPTIONS.OPENPAAS_VIDEOCONFERENCE;
+            self.roomName(new URL(self.event.xOpenpaasVideoconference).pathname.slice(1));
+          } else {
+            self.roomName(uuid4.generate());
+          }
+        });
     }
 
     function isVideoConfHostnameValid() {

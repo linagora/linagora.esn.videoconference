@@ -23,7 +23,7 @@ describe('The calendarVideoconferenceForm component', function() {
   beforeEach(function() {
     module('linagora.esn.videoconference', function($provide) {
       $provide.value('VideoConfConfigurationService', {
-        getJitsiInstanceUrl: function() {
+        getOpenPaasVideoconferenceAppUrl: function() {
           return $q.when('http://localhost/');
         }
       });
