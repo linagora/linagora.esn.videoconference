@@ -21,7 +21,11 @@
       )
         .fg-line.video-conf-url
           label.col-form-label(for="room-name") {{ $ctrl.videoConfHostname }}
-          input#room-name.form-control(type='text' ng-model="$ctrl.roomName" ng-model-options="{getterSetter: true}")
+          input#room-name.form-control(
+            required
+            type='text' ng-model="$ctrl.roomName"
+            ng-model-options="{getterSetter: true}"
+          )
         .input-group
           a(ng-href="{{ $ctrl.event.xOpenpaasVideoconference }}") #{__('Join the meeting video conference')}
 
