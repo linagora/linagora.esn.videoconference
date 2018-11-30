@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('linagora.esn.videoconference')
-         .controller('calendarVideoconferenceBluebarController', calendarVideoconferenceBluebarController);
+    .controller('calendarVideoconferenceBluebarController', calendarVideoconferenceBluebarController);
 
   function calendarVideoconferenceBluebarController(uuid4, VideoConfConfigurationService) {
     var self = this;
@@ -18,7 +18,9 @@
 
     function videoconference() {
       if (self.videoConfHostname && self.videoconferenceLink && self.videoconferenceLink.length) {
-        return self.videoConfHostname + new URL(self.videoconferenceLink).pathname.slice(1);
+        var chunks = self.videoconferenceLink.split('/');
+
+        return self.videoConfHostname + chunks[chunks.length - 1];
       }
 
       return '';

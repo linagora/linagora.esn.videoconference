@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('linagora.esn.videoconference')
-         .controller('calendarVideoconferenceFormController', calendarVideoconferenceFormController);
+    .controller('calendarVideoconferenceFormController', calendarVideoconferenceFormController);
 
   function calendarVideoconferenceFormController(uuid4, VideoConfConfigurationService, EVENT_VIDEOCONFERENCE_OPTIONS) {
     var self = this;
@@ -24,7 +24,9 @@
 
           if (self.event.xOpenpaasVideoconference && self.event.xOpenpaasVideoconference.trim().length > 0) {
             self._videoconference = EVENT_VIDEOCONFERENCE_OPTIONS.OPENPAAS_VIDEOCONFERENCE;
-            self.roomName(new URL(self.event.xOpenpaasVideoconference).pathname.slice(1));
+            var chunks = self.event.xOpenpaasVideoconference.split('/');
+
+            self.roomName(chunks[chunks.length - 1]);
           } else {
             self.roomName(uuid4.generate());
           }
@@ -56,7 +58,7 @@
     function _fullPath() {
       return (self.isVideoConfHostnameValid() &&
         self._videoconference !== EVENT_VIDEOCONFERENCE_OPTIONS.NO_VIDEOCONFERENCE) ?
-        self.videoConfHostname + self._roomName : undefined;
+             self.videoConfHostname + self._roomName : undefined;
     }
   }
 })(angular);
