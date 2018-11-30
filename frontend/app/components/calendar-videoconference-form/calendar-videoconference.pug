@@ -27,7 +27,13 @@
             ng-model-options="{getterSetter: true}"
           )
         .input-group
-          a(ng-href="{{ $ctrl.event.xOpenpaasVideoconference }}") #{__('Join the meeting video conference')}
+          a(
+              title="{{ $ctrl.event.xOpenpaasVideoconference }}"
+              ng-href="{{ $ctrl.event.xOpenpaasVideoconference }}"
+              target='_blank'
+              rel='noopener noreferrer'
+            )
+            | #{__('Join the meeting video conference')}
 
   // Case user cannot modify the event
   .col-xs-12.cal-event-form-organizer(ng-if="!$ctrl.canModifyEvent")
@@ -36,4 +42,10 @@
         span #{__('Video conference')}
       i.mdi.mdi-video
     .meta
-      a(ng-href="{{ $ctrl.event.xOpenpaasVideoconference }}") {{ $ctrl.event.xOpenpaasVideoconference }}
+      a(
+        title="{{ $ctrl.event.xOpenpaasVideoconference }}"
+        ng-href="{{ $ctrl.event.xOpenpaasVideoconference }}"
+        target='_blank'
+        rel='noopener noreferrer'
+      )
+        | #{__('Join the meeting video conference')}
