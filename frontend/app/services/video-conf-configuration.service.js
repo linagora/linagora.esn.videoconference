@@ -8,7 +8,7 @@
     return {
       getConferenceUrl: getConferenceUrl,
       getOpenPaasVideoconferenceAppUrl: getOpenPaasVideoconferenceAppUrl,
-      getjitsiInstanceUrl: getjitsiInstanceUrl
+      getJitsiInstanceUrl: getJitsiInstanceUrl
     };
 
     function getConferenceUrl(id) {
@@ -26,7 +26,7 @@
       });
     }
 
-    function getjitsiInstanceUrl() {
+    function getJitsiInstanceUrl() {
       return esnConfig('linagora.esn.videoconference.jitsiInstanceUrl').then(function(jitsiInstanceUrl) {
         return jitsiInstanceUrl.endsWith('/') ? jitsiInstanceUrl : jitsiInstanceUrl + '/';
       });
