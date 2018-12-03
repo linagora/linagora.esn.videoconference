@@ -9,12 +9,13 @@ module.exports = dependencies => {
   };
 
   function create(conference) {
-    const videoconference = new VideoconferenceModel(conference);
-
-    return videoconference.save();
+    return VideoconferenceModel.findOneAndUpdate(
+      {conferenceName: conference.conferenceName, domainId: conference.domainId, creatorId: conference.creatorId},
+      conference, {upsert: true, new: true, setDefaultsOnInsert: true}
+    );
   }
 
   function get(conferenceId) {
-    return VideoconferenceModel.findOne({_id: conferenceId});
+    return VideoconferenceModel.findById(conferenceId);
   }
 };
