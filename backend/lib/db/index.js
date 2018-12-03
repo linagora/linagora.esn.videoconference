@@ -1,11 +1,14 @@
-'use strict';
+module.exports = dependencies => {
+  const fs = require('fs');
 
-// arguments: dependencies
-module.exports = function() {
+  const models = {};
 
-  // const model = require('./YOUR_MODEL')(dependencies);
+  fs.readdirSync(__dirname + '/models').forEach(filename => {
+    const stat = fs.statSync(__dirname + '/models/' + filename);
 
-  return {
-    // model
-  };
+    if (!stat.isFile()) { return; }
+    models[filename.replace('.js', '')] = require('./models/' + filename)(dependencies);
+  });
+
+  return {models};
 };
