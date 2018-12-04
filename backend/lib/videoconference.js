@@ -1,7 +1,6 @@
 module.exports = dependencies => {
   const mongoose = dependencies('db').mongo.mongoose;
 
-  require('./db');
   const VideoconferenceModel = mongoose.model('VideoConference');
 
   return {
