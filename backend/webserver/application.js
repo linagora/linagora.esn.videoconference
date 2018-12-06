@@ -11,6 +11,11 @@ module.exports = function(dependencies) {
   require('./config/i18n')(dependencies, application);
   require('./config/views')(dependencies, application);
 
+  // eslint-disable-next-line no-process-env
+  if (process.env.NODE_ENV === 'dev') {
+    application.use(require('cors')());
+  }
+
   application.use('/api', require('./api')(dependencies));
 
   return application;

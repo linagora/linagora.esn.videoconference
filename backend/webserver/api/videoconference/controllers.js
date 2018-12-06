@@ -10,14 +10,16 @@ module.exports = dependencies => {
 
   function createConference(req, res) {
     const domainId = req.domain ? req.domain._id || null : null;
-    const conferenceBody = _validateConferenceObject(req.body);
+    let conferenceBody;
 
-    if (typeof conferenceBody !== 'object') {
+    try {
+      conferenceBody = _validateConferenceObject(req.body);
+    } catch (e) {
       return res.status(400).json({
         error: {
           status: 400,
           message: 'Server Error',
-          details: conferenceBody
+          details: e.message
         }
       });
     }
@@ -90,15 +92,15 @@ module.exports = dependencies => {
     const type = body.type ? body.type.toString() : undefined;
 
     if (!conferenceName) {
-      return '`conferenceName` parameter is mandatory';
+      throw new Error('`conferenceName` parameter is mandatory');
     }
 
     if (!type) {
-      return '`type` parameter is mandatory';
+      throw new Error('`type` parameter is mandatory');
     }
 
     if (!allowedTypes.find(it => it === type)) {
-      return `\`type\` must be one of ${allowedTypes}`;
+      throw new Error(`\`type\` must be one of ${allowedTypes}`);
     }
 
     return {conferenceName, type};
