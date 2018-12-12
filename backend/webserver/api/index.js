@@ -1,12 +1,10 @@
-'use strict';
-
 const express = require('express');
 
-module.exports = function() {
+module.exports = dependencies => {
 
   const router = express.Router();
 
-  // require('./example')(dependencies, lib, router);
+  router.use('/conference', require('./videoconference')(dependencies));
 
   return router;
 };

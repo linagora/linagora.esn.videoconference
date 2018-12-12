@@ -3,14 +3,13 @@ module.exports = function(dependencies) {
   const Schema = mongoose.Schema;
 
   const videconferenceSchema = new Schema({
-    _id: { type: String, unique: true },
-    conferenceName: { type: String },
-    domainId: { type: Schema.ObjectId, ref: 'Domain' },
-    creatorId: { type: Schema.Types.ObjectId, ref: 'User' },
+    conferenceName: { type: String, required: true },
+    domainId: { type: Schema.Types.ObjectId, ref: 'Domain', required: true },
+    creatorId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     timestamps: {
-      start: { type: Date, default: Date.now }
+      start: { type: Date, default: Date.now, required: true }
     },
-    type: { type: String }
+    type: { type: String, required: true }
   });
 
   return mongoose.model('VideoConference', videconferenceSchema);

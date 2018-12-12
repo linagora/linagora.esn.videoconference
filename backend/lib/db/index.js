@@ -1,13 +1,15 @@
+const fs = require('fs');
+const path = require('path');
+const models = {};
+
 module.exports = dependencies => {
-  const fs = require('fs');
-
-  const models = {};
-
   fs.readdirSync(__dirname + '/models').forEach(filename => {
-    const stat = fs.statSync(__dirname + '/models/' + filename);
+    const modelPath = path.join(__dirname, 'models', filename);
+    const modelName = filename.replace('.js', '');
+    const stat = fs.statSync(modelPath);
 
-    if (!stat.isFile()) { return; }
-    models[filename.replace('.js', '')] = require('./models/' + filename)(dependencies);
+    if (!stat.isFile() || models[modelName] !== undefined) { return; }
+    models[modelName] = require('./models/' + filename)(dependencies);
   });
 
   return {models};
