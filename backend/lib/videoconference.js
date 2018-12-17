@@ -3,9 +3,16 @@ module.exports = dependencies => {
 
   const VideoconferenceModel = mongoose.model('VideoConference');
 
+  const conferenceTypes = Object.freeze({
+    PUBLIC: 'public',
+    PRIVATE: 'private'
+  });
+
   return {
+    conferenceTypes,
     create,
-    get
+    getByName,
+    getByPublicId
   };
 
   function create(conference) {
@@ -15,7 +22,11 @@ module.exports = dependencies => {
     );
   }
 
-  function get(conferenceId) {
-    return VideoconferenceModel.findById(conferenceId);
+  function getByName(conferenceName) {
+    return VideoconferenceModel.findOne({ conferenceName });
+  }
+
+  function getByPublicId(publicId) {
+    return VideoconferenceModel.findOne({publicId: publicId, type: conferenceTypes.PUBLIC});
   }
 };

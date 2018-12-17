@@ -23,20 +23,10 @@ module.exports = dependencies => {
    *               conferenceName:
    *                 type: string
    *               type:
-   *                 type: string
-   *                 enum:
-   *                   - private
-   *                   - public
+   *                 $ref: '#/definitions/conferenceType'
    *       responses:
    *         201:
-   *           description: OK. With created conference
-   *           examples:
-   *             {
-   *                12,
-   *                "OpenPaaS",
-   *                "public",
-   *                "http://janus.hubl.in"
-   *             }
+   *           $ref: "#/responses/conf_201"
    *         401:
    *           $ref: "#/responses/cm_401"
    *         403:
@@ -46,33 +36,26 @@ module.exports = dependencies => {
 
   /**
    * @swagger
-   *   /api/conference/{conferenceId}:
-   *     get:
+   *   /api/conference/{publicId}:
+   *     post:
    *       tags:
    *         - VideoConference
    *       description: Retreives a conference by its ID
    *       parameters:
-   *         - name: conferenceId
+   *         - name: conferenceName
    *           in: path
    *           required: true
    *           description: conference ID
    *           type: string
    *       responses:
    *         201:
-   *           description: OK. With queried conference
-   *           examples:
-   *             {
-   *                12,
-   *                "OpenPaaS",
-   *                "public",
-   *                "http://janus.hubl.in"
-   *             }
+   *           $ref: "#/responses/conf_201"
    *         401:
    *           $ref: "#/responses/cm_401"
    *         403:
    *           $ref: "#/responses/cm_403"
    */
-  router.get('/:conferenceId', loadDomainByHostname, controllers.getConferenceById);
+  router.get('/:publicId', loadDomainByHostname, controllers.getConferenceByPublicId);
 
   return router;
 };
