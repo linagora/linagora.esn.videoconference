@@ -11,7 +11,7 @@
       controller: 'videoconferenceApplicationMenuController',
       controllerAs: '$ctrl',
       scope: true,
-      template: applicationMenuTemplateBuilder({ url: '{{$ctrl.url}}', target: '_blank' }, { url: '/videoconference/images/videoconference.svg' }, 'Video Conference')
+      template: applicationMenuTemplateBuilder({ url: '{{$ctrl.url}}', target: '_blank', rel: 'noopener noreferrer' }, { url: '/videoconference/images/videoconference.svg' }, 'Video Conference')
     };
 
     return directive;
