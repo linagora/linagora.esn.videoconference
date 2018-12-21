@@ -17,7 +17,7 @@ module.exports = dependencies => {
 
   function create(conference) {
     return VideoconferenceModel.findOneAndUpdate(
-      {conferenceName: conference.conferenceName, domainId: conference.domainId, creatorId: conference.creatorId},
+      {conferenceName: conference.conferenceName, domainId: conference.domainId},
       conference, {upsert: true, new: true, setDefaultsOnInsert: true}
     );
   }
