@@ -1,18 +1,23 @@
+const { DEFAULT_APP_URL } = require('./constants');
+const conferenceTypes = Object.freeze({
+  PUBLIC: 'public',
+  PRIVATE: 'private'
+});
+
 module.exports = dependencies => {
+  const logger = dependencies('logger');
   const mongoose = dependencies('db').mongo.mongoose;
+  const esnConfig = dependencies('esn-config');
 
   const VideoconferenceModel = mongoose.model('VideoConference');
-
-  const conferenceTypes = Object.freeze({
-    PUBLIC: 'public',
-    PRIVATE: 'private'
-  });
 
   return {
     conferenceTypes,
     create,
     getByName,
-    getByPublicId
+    getByPublicId,
+    getAppUrl,
+    getUrls
   };
 
   function create(conference) {
@@ -28,5 +33,24 @@ module.exports = dependencies => {
 
   function getByPublicId(publicId) {
     return VideoconferenceModel.findOne({publicId: publicId, type: conferenceTypes.PUBLIC});
+  }
+
+  function getUrls(conference) {
+    return getAppUrl(conference.domainId).then(url => ({
+      public: `${url}/o/${conference.publicId}`,
+      private: `${url}/${conference.conferenceName}`
+    }));
+  }
+
+  function getAppUrl(domainId) {
+    return esnConfig('openPaasVideoconferenceAppUrl').inModule('linagora.esn.videoconference')
+      .getFromAllDomains()
+      .then(configs => ((configs || []).find(config => config.domainId.toString() === domainId.toString())))
+      .then(config => (config ? config.config || DEFAULT_APP_URL : DEFAULT_APP_URL))
+      .catch(err => {
+        logger.error(`Can not get videoconference application URL, defaulting to ${DEFAULT_APP_URL}`, err);
+
+        return DEFAULT_APP_URL;
+      });
   }
 };
