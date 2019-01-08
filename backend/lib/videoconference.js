@@ -17,6 +17,7 @@ module.exports = dependencies => {
     getByName,
     getByPublicId,
     getAppUrl,
+    getConfigurationUrl,
     getUrls
   };
 
@@ -43,12 +44,16 @@ module.exports = dependencies => {
   }
 
   function getAppUrl(domainId) {
-    return esnConfig('openPaasVideoconferenceAppUrl').inModule('linagora.esn.videoconference')
+    return getConfigurationUrl('openPaasVideoconferenceAppUrl', domainId, DEFAULT_APP_URL);
+  }
+
+  function getConfigurationUrl(name, domainId, defaultValue) {
+    return esnConfig(name).inModule('linagora.esn.videoconference')
       .getFromAllDomains()
       .then(configs => ((configs || []).find(config => config.domainId.toString() === domainId.toString())))
-      .then(config => (config ? config.config || DEFAULT_APP_URL : DEFAULT_APP_URL))
+      .then(config => (config ? config.config || defaultValue : defaultValue))
       .catch(err => {
-        logger.error(`Can not get videoconference application URL, defaulting to ${DEFAULT_APP_URL}`, err);
+        logger.error(`Can not get ${name} URL, defaulting to ${defaultValue}`, err);
 
         return DEFAULT_APP_URL;
       });
