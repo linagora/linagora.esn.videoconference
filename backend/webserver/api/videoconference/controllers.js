@@ -1,7 +1,8 @@
-module.exports = dependencies => {
-  const {videoconference} = require('../../../lib')(dependencies);
+const { DEFAULT_JITSI_URL } = require('../../../lib/constants');
 
-  const esnConfig = dependencies('esn-config');
+module.exports = dependencies => {
+  const logger = dependencies('logger');
+  const { videoconference } = require('../../../lib')(dependencies);
 
   return {
     createConference,
@@ -14,29 +15,45 @@ module.exports = dependencies => {
 
     try {
       conferenceBody = _validateConferenceObject(req.body);
-    } catch (e) {
+    } catch (err) {
+      logger.error(`Bad conference input ${req.body}`, err);
+
       return res.status(400).json({
         error: {
           status: 400,
-          message: 'Server Error',
-          details: e.message
+          message: 'Bad request',
+          details: err.message
         }
       });
     }
 
-    _getJitsiInstanceUrl(domainId)
-      .then(jitsiInstanceUrl => {
-        conferenceBody.domainId = domainId;
-        conferenceBody.creatorId = req.user._id;
+    conferenceBody.domainId = domainId;
+    conferenceBody.creatorId = req.user._id;
 
-        return videoconference.create(conferenceBody)
-          .then(result => res.status(200).json({
-            publicId: result.publicId,
-            conferenceName: result.conferenceName,
-            type: result.type,
-            jitsiInstanceUrl
-          }));
+    _getJitsiInstanceUrl(domainId)
+      .then(url => _createConference(url, conferenceBody))
+      .then(response => res.status(200).json(response))
+      .catch(err => {
+        const msg = 'Error while creating conference';
+
+        logger.error(msg, err);
+        res.status(500).json({
+          error: {
+            status: 500,
+            message: 'Server error',
+            details: msg
+          }
+        });
       });
+
+      function _createConference(jitsiInstanceUrl, conference) {
+        return videoconference.create(conference).then(result => ({
+          publicId: result.publicId,
+          conferenceName: result.conferenceName,
+          type: result.type,
+          jitsiInstanceUrl
+        }));
+      }
   }
 
   function getConferenceByPublicId(req, res) {
@@ -46,46 +63,52 @@ module.exports = dependencies => {
   function _getConferenceBy(req, res, modelField) {
     const domainId = req.domain ? req.domain._id || null : null;
     const query = req.params[modelField];
-    const fn = {
-      conferenceName: videoconference.getByName,
-      publicId: videoconference.getByPublicId
-    }[modelField];
 
-    return _getJitsiInstanceUrl(domainId)
-      .then(
-        jitsiInstanceUrl =>
-          fn(query)
-            .then(result => res.status(200).json({
-              publicId: result.publicId,
-              conferenceName: result.conferenceName,
-              type: result.type,
-              jitsiInstanceUrl
-            }))
-            .catch(() => res.status(404).json({
-              error: {
-                status: 404,
-                message: 'Conference not found',
-                details: `Unable to retreive conference with ${modelField} of ${query}`
-              }
-            }))
-      );
+    _getJitsiInstanceUrl(domainId)
+      .then(jitsiInstanceUrl => getConference(jitsiInstanceUrl, query, modelField))
+      .then(conference => (conference ? res.status(200).json(conference) : res.status(404).json({
+        error: {
+          status: 404,
+          message: 'Not found',
+          details: `Can not find conference ${modelField} of ${query}`
+        }
+      })))
+      .catch(err => {
+        const msg = `Error while gettting conference with ${modelField} of ${query}`;
+
+        logger.error(msg, err);
+        res.status(500).json({
+          error: {
+            status: 500,
+            message: 'Server error',
+            details: msg
+          }
+        });
+      });
+
+    function getConference(jitsiInstanceUrl, query, modelField) {
+      const get = {
+        conferenceName: videoconference.getByName,
+        publicId: videoconference.getByPublicId
+      }[modelField];
+
+      return get(query).then(conference => {
+        if (!conference) {
+          return;
+        }
+
+        return {
+          publicId: conference.publicId,
+          conferenceName: conference.conferenceName,
+          type: conference.type,
+          jitsiInstanceUrl
+        };
+      });
+    }
   }
 
-  function _getJitsiInstanceUrl(domainId, res) {
-    return esnConfig('jitsiInstanceUrl').inModule('linagora.esn.videoconference')
-      .getFromAllDomains()
-      .then(configs => {
-        const config = configs.find(item => item.domainId.toString() === domainId.toString());
-
-        return config.config;
-      })
-      .catch(() => res.status(500).json({
-        error: {
-          status: 500,
-          message: 'Server Error',
-          details: `Unknown OpenPaaS domain (given: ${domainId})`
-        }
-      }));
+  function _getJitsiInstanceUrl(domainId) {
+    return videoconference.getConfigurationUrl('jitsiInstanceUrl', domainId, DEFAULT_JITSI_URL);
   }
 
   function _validateConferenceObject(body) {
@@ -105,6 +128,6 @@ module.exports = dependencies => {
       throw new Error(`\`type\` must be one of ${allowedTypes}`);
     }
 
-    return {conferenceName, type};
+    return { conferenceName, type };
   }
 };
