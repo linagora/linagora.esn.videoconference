@@ -37,7 +37,9 @@ module.exports = dependencies => {
   }
 
   function getUrls(conference) {
-    return getAppUrl(conference.domainId).then(url => ({
+    return getAppUrl(conference.domainId)
+      .then(url => url.replace(/\/+$/i, ''))
+      .then(url => ({
       public: `${url}/o/${conference.publicId}`,
       private: `${url}/${conference.conferenceName}`
     }));
