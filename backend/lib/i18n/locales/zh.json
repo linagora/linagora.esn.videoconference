@@ -1,7 +1,7 @@
 {
-  "Call": "视频通话",
-  "Conference application URL": "会议申请URL",
+  "Call": "呼叫",
+  "Conference application URL": "会议应用URL",
   "Jitsi HTTP URL": "Jitsi HTTP URL",
-  "Video conference": "Video conference",
-  "Join the meeting video conference": "Join the meeting video conference"
+  "Join the meeting video conference": "加入视频会议",
+  "Video conference": "视频会议"
 }
