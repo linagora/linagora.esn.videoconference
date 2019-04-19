@@ -6,10 +6,15 @@
   function VideoConfConfigurationService(esnConfig) {
 
     return {
+      get: get,
       getConferenceUrl: getConferenceUrl,
       getOpenPaasVideoconferenceAppUrl: getOpenPaasVideoconferenceAppUrl,
       getJitsiInstanceUrl: getJitsiInstanceUrl
     };
+
+    function get(key, defaultValue) {
+      return esnConfig('core.modules.linagora.esn.videoconference.' + key, defaultValue);
+    }
 
     function getConferenceUrl(id) {
       return getOpenPaasVideoconferenceAppUrl().then(function(url) {
