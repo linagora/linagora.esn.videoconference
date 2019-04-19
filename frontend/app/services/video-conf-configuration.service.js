@@ -14,7 +14,7 @@
     function getConferenceUrl(id) {
       return getOpenPaasVideoconferenceAppUrl().then(function(url) {
         // remove trailing '/'
-        url = url.replace(/\/+$/i, '');
+        url = url && url.replace(/\/+$/i, '');
 
         return url + '/' + id;
       });
@@ -23,7 +23,7 @@
     function getOpenPaasVideoconferenceAppUrl() {
       return esnConfig('linagora.esn.videoconference.openPaasVideoconferenceAppUrl')
         .then(function(openPaasVideoconferenceAppUrl) {
-          return openPaasVideoconferenceAppUrl.endsWith('/') ?
+          return openPaasVideoconferenceAppUrl && openPaasVideoconferenceAppUrl.endsWith('/') ?
                  openPaasVideoconferenceAppUrl :
                  openPaasVideoconferenceAppUrl + '/';
         });
@@ -31,7 +31,7 @@
 
     function getJitsiInstanceUrl() {
       return esnConfig('linagora.esn.videoconference.jitsiInstanceUrl').then(function(jitsiInstanceUrl) {
-        return jitsiInstanceUrl.endsWith('/') ? jitsiInstanceUrl : jitsiInstanceUrl + '/';
+        return jitsiInstanceUrl && jitsiInstanceUrl.endsWith('/') ? jitsiInstanceUrl : jitsiInstanceUrl + '/';
       });
     }
   }
