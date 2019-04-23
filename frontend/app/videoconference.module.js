@@ -8,6 +8,7 @@
     'esn.user',
     'ui.router',
     'op.dynamicDirective',
+    'esn.module-registry',
     'restangular'
   ]);
 })(angular);

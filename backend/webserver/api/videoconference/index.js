@@ -1,10 +1,15 @@
 const express = require('express');
 
-module.exports = dependencies => {
+module.exports = (dependencies, moduleName) => {
   const router = express.Router();
   const controllers = require('./controllers')(dependencies);
   const {requiresAPILogin} = dependencies('authorizationMW');
+  const moduleMW = dependencies('moduleMW');
   const { loadDomainByHostname } = dependencies('domainMW');
+
+  router.all('/*',
+    moduleMW.requiresModuleIsEnabledInCurrentDomain(moduleName)
+  );
 
   /**
    * @swagger

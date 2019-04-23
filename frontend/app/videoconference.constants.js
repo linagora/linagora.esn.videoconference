@@ -22,7 +22,8 @@
           domain: true,
           platform: false
         }
-      }
+      },
+      disableable: true
     });
 
 })(angular);
