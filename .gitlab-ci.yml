@@ -12,7 +12,7 @@ stages:
   policy: pull
 
 .test-template: &test-template
-  image: node:8.15.0-stretch
+  image: node:10-stretch
   stage: test
   tags:
     - docker
@@ -52,7 +52,7 @@ stages:
     REDIS_PORT: 6379
 
 prepare:
-  image: node:8.15.0-stretch
+  image: node:10-stretch
   stage: prepare
   tags:
     - docker
@@ -101,7 +101,7 @@ test_frontend:
   <<: *test-template 
   image: docker-registry.linagora.com:5000/public-releases/openpaas-esn-test-helper:1.1.0
   script:
-    - grunt -v test-frontend
+    - grunt -v test-unit-frontend
 
 test_unit_backtend:
   <<: *test-template
