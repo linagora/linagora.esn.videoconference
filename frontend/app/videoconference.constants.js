@@ -23,7 +23,8 @@
           platform: false
         }
       },
-      disableable: true
+      disableable: true,
+      isDisplayedByDefault: false
     });
 
 })(angular);
