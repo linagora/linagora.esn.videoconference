@@ -16,7 +16,7 @@
         { url: VIDEOCONFERENCE_MODULE_METADATA.icon },
         VIDEOCONFERENCE_MODULE_METADATA.title,
         'core.modules.linagora.esn.videoconference.enabled',
-        false
+        VIDEOCONFERENCE_MODULE_METADATA.isDisplayedByDefault
       )
     };
 
