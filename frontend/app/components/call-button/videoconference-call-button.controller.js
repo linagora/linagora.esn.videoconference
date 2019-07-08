@@ -8,7 +8,15 @@
     var self = this;
 
     self.launch = launch;
-    self.isCurrentUser = self.userId === session.user._id;
+    self.isNotUser = isNotUser;
+
+    if (!self.isCurrentUser) {
+      self.isCurrentUser = self.userId === session.user._id;
+    }
+
+    function isNotUser() {
+      return (self.isCurrentUser || self.objectType !== 'user');
+    }
 
     function launch(userId) {
       if (self.isCurrentUser) return;
