@@ -6,7 +6,9 @@
       templateUrl: '/videoconference/app/components/call-button/videoconference-call-button.html',
       controller: 'videoconferenceCallButtonController',
       bindings: {
-        userId: '@'
+        userId: '@',
+        objectType: '@',
+        isCurrentUser: '<'
       }
     });
 })(angular);

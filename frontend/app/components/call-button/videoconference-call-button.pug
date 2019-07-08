@@ -1,3 +1,3 @@
-button.btn.btn-link(ng-class="{disabled: $ctrl.isCurrentUser}" ng-click="$ctrl.launch($ctrl.userId)")
+button.btn.btn-link(ng-class="{ disabled: $ctrl.isNotUser()}", ng-disabled="{{ $ctrl.isNotUser() }}", user-id="{{ $ctrl.userId }}" ng-click="$ctrl.launch($ctrl.userId)")
   i.mdi.mdi-message-video
   span #{__('Call')}
