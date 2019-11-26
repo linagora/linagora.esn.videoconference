@@ -4,6 +4,7 @@ const AwesomeModule = require('awesome-module');
 const Dependency = AwesomeModule.AwesomeModuleDependency;
 const path = require('path');
 const glob = require('glob-all');
+const cors = require('cors');
 const FRONTEND_JS_PATH = __dirname + '/frontend/app/';
 const NAME = 'videoconference';
 const AWESOME_MODULE_NAME = 'linagora.esn.videoconference';
@@ -43,6 +44,7 @@ const awesomeModule = new AwesomeModule(AWESOME_MODULE_NAME, {
       const app = require('./backend/webserver/application')(dependencies, this);
 
       // Register every exposed endpoints
+      app.all('/api/*', cors({ origin: true, credentials: true }));
       app.use('/api', this.api.module);
 
       const webserverWrapper = dependencies('webserver-wrapper');
