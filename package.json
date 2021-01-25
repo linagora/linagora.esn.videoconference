@@ -1,6 +1,6 @@
 {
   "name": "linagora.esn.videoconference",
-  "version": "1.9.0-dev",
+  "version": "1.9.0-rc5",
   "description": "OpenPaaS videoconference module",
   "main": "index.js",
   "devDependencies": {
